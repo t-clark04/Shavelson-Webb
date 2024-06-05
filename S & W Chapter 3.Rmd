@@ -1,0 +1,77 @@
+---
+title: "S & W Chapter 3"
+author: "Tommy Clark"
+date: "`r Sys.Date()`"
+output:
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(gtheory)
+library(knitr)
+```
+
+## Problem 1
+As part of an experiment on person perception and attribution, 89 people were given information about a fictitious person and then were administered a 15-item test to measure their recall about the fictitious person. In Table 3.7 are the results of the two-way ANOVA.
+
+a. Calculate the relevant variance components and the percentage of variance accounted for by each.\
+$\hat{\sigma}_{pi,e}^2 = {MS}_{pi,e} = 0.171$\
+$\hat{\sigma}_{{i}}^2 = ({MS}_i - \hat{\sigma}_{pi,e}^2)/{n_p} = (4.662 - 0.171)/89 = 0.050$\
+$\hat{\sigma}_{{p}}^2 = ({MS}_p - \hat{\sigma}_{pi,e}^2)/{n_i} = (0.540 - 0.171)/15 = 0.025$\
+$\hat{\sigma}_{{total}}^2 = 0.171 + 0.050 + 0.025 = 0.246$\
+$\hat{\sigma}_{{p}}^2/\hat{\sigma}_{{total}}^2 = 0.025/0.246 = 10\%$\
+$\hat{\sigma}_{{i}}^2/\hat{\sigma}_{{total}}^2 = 0.050/0.246 = 20\%$\
+$\hat{\sigma}_{pi,e}^2/\hat{\sigma}_{{total}}^2 = 0.171/0.246 = 70\%$
+
+b. Interpret the estimated variance components.\
+Since the variance component for persons constituted the smallest percentage of the total variation, this indicates that there was little variation between persons in terms of their ability to recall information about the fictitious person. The variance component for items shows us the degree of variation in difficulty between questions was quite large, averaging over all people in the study. Finally, the large value for the variance component of the residual term tells us either that some people 
+found different problems difficult, that there were systematic sources of unmeasured variation (i.e. people proctoring the test), or that there were unsystematic sources of unmeasured variation (i.e. somebody's pencil broke).
+
+c. The F values for the main effects of persons and items are both statistically significant. Of what use is this information in G theory?\
+This information does not matter to us, as we are only looking at the individual components of estimated variances.
+
+d. The estimated variance components in (b) concern the generalizability of what length test (i.e. how many items)?\
+They concern the generalizability of a one-item test, which partly explains why the relative values of the non-person variance components are so high.
+
+
+## Problem 2
+A persons-by-raters design has two variance components that concern raters: ${\sigma}_r^2$ and ${\sigma}_{pr,e}^2$.\
+
+a. Describing both as "differences between raters" is ambiguous. Give more precise descriptions.\
+${\sigma}_r^2$ refers to the main effect variance component for raters, giving us an indication of the systematic differences present between the raters themselves (across persons). ${\sigma}_{pr,e}^2$ is the variance component for the interaction between raters and persons (and confounded with unmeasured error), and it concerns the relative ratings of persons differing across raters. For example, if one rater thought that persons 2 and 7 specifically should be ranked higher than another rater did.\
+
+b. If ${\sigma}_r^2$ is large, must ${\sigma}_{pr,e}^2$ also be large?\
+No. These values are independent, which is why we are able to carry out these G & D studies using ANOVA in the first place. Even if there were systematic differences between raters, it wouldn't actually affect the interaction term.
+
+## Problem 3
+In a hypothetical G study of vocational interest, six persons completed five items representing clerical interest on two occasions. The data are presented in Table 3.8\
+```{r echo = FALSE}
+table3.8 <- read.delim("C:/Users/t_cla/OneDrive/Summer Research/ShavelsonWebb1991_table3.8.txt")
+kable(table3.8[1:6, ], caption = "Table 3.8 (first six rows)")
+```
+a. Run a three-way ANOVA to get the mean squares.\
+```{r}
+summary(aov(score ~ person*occasion + person*item + item*occasion, data = table3.8))
+```
+
+b. 
+${EMS}_p = {\sigma}_{pio,e}^2 + 2{\sigma}_{pi}^2 + 5{\sigma}_{po}^2 + 10{\sigma}_{p}^2$\
+${EMS}_i = {\sigma}_{pio,e}^2 + 2{\sigma}_{pi}^2 + 6{\sigma}_{io}^2 + 12{\sigma}_{i}^2$\
+${EMS}_o = {\sigma}_{pio,e}^2 + 5{\sigma}_{po}^2 + 6{\sigma}_{io}^2 + 30{\sigma}_{o}^2$\
+${EMS}_{pi} = {\sigma}_{pio,e}^2 + 2{\sigma}_{pi}^2$\
+${EMS}_{po} = {\sigma}_{pio,e}^2 + 5{\sigma}_{po}^2$\
+${EMS}_{io} = {\sigma}_{pio,e}^2 + 6{\sigma}_{io}^2$\
+${EMS}_{pio,e} = {\sigma}_{pio,e}^2$
+
+c. 
+THE RESIDUAL MEAN SQUARES VALUE IS NOT CORRECT IN THE AOV OUTPUT, AND I CAN'T FIGURE OUT WHY!
+
+```{r}
+formula1 <- score ~ (1|person) + (1|item) + (1|occasion) + (1|person:item) + (1|person:occasion) + (1|item:occasion)
+
+gstudy(data = table3.8, formula1)
+```
+f. Interpret the estimated variance components.\
+The largest variance component was that of persons, indicating that across items and occasions, people in the study differed in terms of their interest in clerical work. The somewhat large variance component of items shows that there were some items in the study which showed greater clerical interest than others (across subjects and occasions). The low variance component for occasions indicates that there was not much variation between occasions of the study (across subjects and items). The high (person x item) interaction term essentially shows that the ranking of the subjects' clerical interest differed from item to item. The small (person x occasion) variance component means that people's relative ranking in terms of clerical interest did not change much between occasions. The variance term of 0 for (item x occasion) interaction shows that the ranking of the average item scores remained consistent between occasions. Finally, the high residual variance indicates either an interaction between all three variables or some kind of unmeasured type of variation (either systematic or unsystematic).

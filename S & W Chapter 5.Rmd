@@ -1,0 +1,94 @@
+---
+title: "S & W Chapter 5"
+author: "Tommy Clark"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(gtheory)
+library(knitr)
+library(tidyverse)
+```
+
+## Problem 1
+In a study of teacher effectiveness, Marzano (1973) audiotaped teachers during five 1-week segments over a 6-month period. During each 1-week segment, teachers were observed while teaching lessons from books A, B, and C of the Distar Language 1 program. The design was fully crossed: teachers (p) by occasions (o) by books (b).\
+For each scenario below, decide whether books should be considered random or fixed.
+
+a. Books A, B, C were purposively selected from all Distar books because they cover the most basic skills.\
+Here, the books should be considered fixed. They were selected purposively, and they cannot be considered exchangeable with other Distar books.\
+
+b. Books A, B, C were selected because they are the books most often used by teachers.\
+If the books could be reasonably exchanged with other Distar books, then the books should be considered random. Otherwise, they are fixed.\
+
+c. Books A, B, C were selected because the schools in the study were already using them.\
+It is the same idea as in b. If the books could be exchanged with any other Distar books, then they are random. Otherwise, they're fixed.\
+
+d. Books A, B, C are the only Distar books in print.\
+Fixed: These books represent the only possible books in the Distar book universe.\
+
+e. Books A, B, C were selected because they corresponded to the curriculum during the six-month period studied.\
+Same as part (b) -- if the books could be exchanged with any other books in the Distar universe, then random. Otherwise, fixed.\
+
+## Problem 2
+For the study in Exercise 1 above, the estimated variance components from the analysis of "the degree to which the teacher followed the Distar format," with all facets treated as random, were $\hat{\sigma}_{{p}}^2 = 0.45$; $\hat{\sigma}_{{o}}^2 = 0.07$; $\hat{\sigma}_{{b}}^2 = 0.10$; $\hat{\sigma}_{{po}}^2 = 0.03$; $\hat{\sigma}_{{ob}}^2 = 0.04$; $\hat{\sigma}_{{pob,e}}^2 = 0.35$. If books are considered fixed, is it perferable to conduct a separate G analysis for each book separately or to average over books?\ 
+
+Firstly, this question needs to be looked at from a conceptual standpoint. If the books are characteristically different, to the degree that they are expected to have more or less of an effect on the teacher's ability to follow them, then it is preferable to conduct a separate p x o G analysis for each book.\
+On the other hand, if it makes more sense to average over the books, then we must turn to the variance component values to see if it is prudent to do so. Since about 16% of the variation in the data is due to variation within the books, then this fairly large percentage indicates to us that book variation plays a role in the teacher's ability to follow a given book (which means we might want to carry out separate G studies). Still, if we only care about the interaction between books and persons, meaning we really only care about the relative standing of the teachers rather than their individual scores, then it could be appropriate to average over the books.\
+
+## Problem 3
+Calculate the variance components for the study in Exercise 2 above, averaging over books.\
+$\hat{\sigma}_{{{p}^*}}^2 = \hat{\sigma}_{{{p}}}^2 + \frac{1}{n_b} \hat{\sigma}_{pb}^2= 0.45 + \frac{1}{3}(0.03) = 0.46$\
+$\hat{\sigma}_{{{o}^*}}^2 = \hat{\sigma}_{{{o}}}^2 + \frac{1}{n_b} \hat{\sigma}_{ob}^2= 0.07 + \frac{1}{3}(0.04) = 0.08$\
+$\hat{\sigma}_{{{po,e}^*}}^2 = \hat{\sigma}_{{{po}}}^2 + \frac{1}{n_b} \hat{\sigma}_{pob,e}^2= 0.03 + \frac{1}{3}(0.35) = 0.15$\ 
+
+## Problem 4
+In a study of basic skills in reading, seventh-grade students were administered a reading test with three subtests: decoding skills, vocabulary, and comprehension. Each subtest had 20 items. A portion of the data set is given in Table 5.8 (5 items per subtest for 10 students).
+
+a. Calculate the variance components, treating all facets as random.\
+```{r}
+table5.8 <- read.delim("C:/Users/t_cla/OneDrive/Summer Research/ShavelsonWebb1991_table5.8.txt")
+formula2 <- score ~ (1|person) + (1|person:subtest) + (1|subtest/item)
+gstudy(data = table5.8, formula2)
+```
+
+b. If subtest is a fixed facet, is it appropriate to average over subtests or to analyze each subtest separately.\
+Due to the fact that the variance components for subtest and subtest x person interaction are so small, it would be permissible to do either. It essentially depends on what we are looking for. If we care about average overall reading score, then averaging over the subtests makes sense. If, on the other hand, we wish to look at the differences between students within each of the skill areas, then analyzing each subtest separately makes more sense.\
+
+c. Treating subtest as a fixed facet, calculate the variance components for the average over subtests and for each subtest separately.\
+For averaging over subtests:\
+$\hat{\sigma}_{{{p}^*}}^2 = \hat{\sigma}_{{{p}}}^2 + \frac{1}{n_s} \hat{\sigma}_{ps}^2= 0.07467 + \frac{1}{3}(0.00941) = 0.07781$\
+$\hat{\sigma}_{{{i}^*}}^2 = \hat{\sigma}_{{{i,is}}}^2 = 0.02926$\
+$\hat{\sigma}_{{{pi,e}^*}}^2 = \hat{\sigma}_{{{pi,pis,e}}}^2 = 0.13741$\
+For analyzing each subtest separately:\
+Decoding subtest:\
+```{r}
+decoding <- table5.8 %>%
+  filter(subtest == "decode")
+
+formula3 <- score ~ (1|person) + (1|item)
+
+gstudy(data = decoding, formula3)
+```
+
+Vocabulary subtest:\
+```{r}
+vocabulary <- table5.8 %>%
+  filter(subtest == "vocab")
+
+formula4 <- score ~ (1|person) + (1|item)
+
+gstudy(data = vocabulary, formula4)
+```
+
+Comprehension Subtest:\
+```{r}
+comprehension <- table5.8 %>%
+  filter(subtest == "comp")
+
+formula5 <- score ~ (1|person) + (1|item)
+
+gstudy(data = comprehension, formula5)
+```
+

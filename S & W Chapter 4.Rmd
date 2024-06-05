@@ -1,0 +1,53 @@
+---
+title: "S & W Chapter 4"
+author: "Tommy Clark"
+date: '`r Sys.Date()`'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(gtheory)
+library(knitr)
+library(tidyverse)
+```
+
+## Problem 1
+In a study of classroom interaction, Erlich and Borich (1979) observed 17 second- and third-grade classrooms each on five occasions. Because "teachers were observed at different times of day, on different days and teaching what may be considered different lessons," Erlich and Borich (1979, p. 12) treated occasions as nested within teachers. From the results of the ANOVA for the behavior "teacher asks a new question following correct response to the teacher's previous question," estimate and interpret the variance components. See Table 4.3.\
+$\hat{\sigma}_{o,po,e}^2 = {MS}_{o:p} = 22.73$\
+$\hat{\sigma}_{{p}}^2 = ({MS}_p - \hat{\sigma}_{o,po,e}^2)/{n_o} = (81.25 - 22.73)/5 = 11.70$\
+$\hat{\sigma}_{{total}}^2 = 22.73 + 11.70 = 34.43$\
+$\hat{\sigma}_{{p}}^2/\hat{\sigma}_{{total}}^2 = 11.70/34.43 = 34\%$\
+$\hat{\sigma}_{o,po,e}^2/\hat{\sigma}_{{total}}^2 = 22.73/34.43 = 66\%$\
+The somewhat large variance component for universe-score (i.e. teachers) shows that teachers varied somewhat considerably regarding the studied behavior. Still, the residual variance component (which was about double that of the universe-score) shows either that different occasions prompted different levels of behavior overall, whether certain teachers differed considerably on different occasions, or whether some other form of unmeasured variation arose during the study.
+
+
+## Problem 2
+In a study of Marine Corps infantry riflemen, 43 riflemen were observed by two raters on three occasions as they assembled communications equipment. A different pair of raters evaluated the riflemen's performance on each occasion, but all riflemen performed the task on every occasion. What was the design of the study?\
+Since a different pair of raters evaluated each occasion, we can say that raters were nested within occasions, so firstly, (r:o). Furthermore, since every rifleman performed the task on every occasion, then (r:o) x p. Thus, the design of the study was (r:o) x p, or equivalently, p x (r:o).
+
+## Problem 3
+The results of the ANOVA in the G study of Marine Corps infantry riflemen assembling communications equipment are presented in Table 4.4.
+
+a. List the expected mean squares for this design.\
+${EMS}_p = {\sigma}_{pr,pro,e}^2 + 2{\sigma}_{po}^2 + 6{\sigma}_{p}^2$\
+${EMS}_o = {\sigma}_{pr,pro,e}^2 + 2{\sigma}_{po}^2 + 43{\sigma}_{r,ro}^2 + 86{\sigma}_{o}^2$\
+${EMS}_{po} = {\sigma}_{pr,pro,e}^2 + 2{\sigma}_{po}^2$\
+${EMS}_{r,ro} = {\sigma}_{pr,pro,e}^2 + 43{\sigma}_{r,ro}^2$\
+${EMS}_{pr,pro,e} = {\sigma}_{pr,pro,e}^2$
+
+b. Calculate and interpret the estimated variance components.
+$\hat{\sigma}_{pr,pro,e}^2 = {MS}_{pr,pro,e} = 0.0154$
+$\hat{\sigma}_{r,ro}^2 = ({MS}_{r,ro} - \hat{\sigma}_{pr,pro,e}^2)/43 = 0.0013$\
+$\hat{\sigma}_{po}^2 = ({MS}_{po} - \hat{\sigma}_{pr,pro,e}^2)/2 = 0.0035$\
+$\hat{\sigma}_{{o}}^2 = ({MS}_o - \hat{\sigma}_{pr,pro,e}^2 - 2\hat{\sigma}_{po}^2 - 43\hat{\sigma}_{r,ro}^2)/86 = 0.0070$\
+$\hat{\sigma}_{{p}}^2 = ({MS}_p - \hat{\sigma}_{pr,pro,e}^2 - 2\hat{\sigma}_{po}^2)/6 = 0.0125$\
+$\hat{\sigma}_{{total}}^2 = 0.0154 + 0.0013 + 0.0035 + 0.0070 + 0.0125 = 0.0397$\
+$\hat{\sigma}_{{p}}^2/\hat{\sigma}_{{total}}^2 = 0.0125/0.0397 = 32\%$\
+$\hat{\sigma}_{{o}}^2/\hat{\sigma}_{{total}}^2 = 0.0070/0.0397 = 18\%$\
+$\hat{\sigma}_{{po}}^2/\hat{\sigma}_{{total}}^2 = 0.0035/0.0397 = 9\%$\
+$\hat{\sigma}_{{r,ro}}^2/\hat{\sigma}_{{total}}^2 = 0.0013/0.0397 = 3\%$\
+$\hat{\sigma}_{{pr,pro,e}}^2/\hat{\sigma}_{{total}}^2 = 0.0154/0.0397 = 39\%$\
+The relatively large variance component for persons indicates that there were pretty strong differences between riflemen in terms of their respective performances. The somewhat large occasion variance component means that there were some pretty strong differences in riflemen performance, on average, between occasions. The relatively small (but nontrivial) po variance component shows us that the relative standing of the riflemen differed somewhat between occasions. The very small variance component for (r,ro) means that raters used consistent scales overall, and their scales did not differ much between occasions. Finally, the very large residual variance component (pr,pro,e) means that either that there were substantial differences between raters in terms of their relative rankings of the riflemen, that the differences arose over rater-occasion combinations, or that there was considerable unmeasured variation present in the study.
+
+

@@ -1,0 +1,29 @@
+---
+title: "S & W Chapter 6"
+author: "Tommy Clark"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(gtheory)
+library(knitr)
+```
+
+## Problem 1
+The estimated variance components for the G study of person perception and attribution (see Chapter 3, Exercise 1) are $\hat{\sigma}_{{p}}^2 = 0.025$, $\hat{\sigma}_{{i}}^2 = 0.050$, $\hat{\sigma}_{{pi,e}}^2 = 0.171$. Calculate the estimated error variances and G coefficients for relative and absolute decisions for a one-item test.\
+$\hat{\sigma}_{{Rel}}^2 = \frac{\hat{\sigma}_{{pi,e}}^2}{n_i'} = \frac{0.171}{1} = 0.171$\
+$\hat{\sigma}_{{Abs}}^2 = \frac{\hat{\sigma}_{{i}}^2}{n_i'} + \frac{\hat{\sigma}_{{pi,e}}^2}{n_i'} = \frac{0.050}{1} + \frac{0.171}{1} = 0.221$\
+$\hat{\rho}^2 = \frac{\hat{\sigma}_{{p}}^2}{\hat{\sigma}_{{p}}^2 + \hat{\sigma}_{{Rel}}^2} = \frac{0.025}{0.025 + 0.171} = 0.13$\
+$\hat{\phi} = \frac{\hat{\sigma}_{{p}}^2}{\hat{\sigma}_{{p}}^2 + \hat{\sigma}_{{Abs}}^2} = \frac{0.025}{0.025 + 0.221} = 0.10$\
+
+## Problem 2
+The estimated variance components for the hypothetical G study of vocational interest are given in Table 6.1 (see Chapter 3, Exercise 3). Calculate the estimated error variances and G coefficients for relative and absolute decisions for a D study with one item and one occasion.\
+$\hat{\sigma}_{{Rel}}^2 = \frac{\hat{\sigma}_{{pi}}^2}{n_i'} + \frac{\hat{\sigma}_{{po}}^2}{n_o'} + \frac{\hat{\sigma}_{{pio,e}}^2}{n_i'n_o'} = \frac{0.4733}{1} + \frac{0.0217}{1} + \frac{0.5583}{1*1} = 1.0533$\
+$\hat{\sigma}_{{Abs}}^2 = \frac{\hat{\sigma}_{{i}}^2}{n_i'} + \frac{\hat{\sigma}_{{o}}^2}{n_o'} + \frac{\hat{\sigma}_{{io}}^2}{n_i'n_o'} + \frac{\hat{\sigma}_{{pi}}^2}{n_i'} + \frac{\hat{\sigma}_{{po}}^2}{n_o'} + \frac{\hat{\sigma}_{{pio,e}}^2}{n_i'n_o'} = \frac{0.1683}{1} + \frac{0.0133}{1} + \frac{0}{1*1} +  \frac{0.4733}{1} + \frac{0.0217}{1} + \frac{0.5583}{1*1} = 1.2349$\
+$\hat{\rho}^2 = \frac{\hat{\sigma}_{{p}}^2}{\hat{\sigma}_{{p}}^2 + \hat{\sigma}_{{Rel}}^2} = \frac{0.5333}{0.5333 + 1.0533} = 0.34$\
+$\hat{\phi} = \frac{\hat{\sigma}_{{p}}^2}{\hat{\sigma}_{{p}}^2 + \hat{\sigma}_{{Abs}}^2} = \frac{0.5333}{0.5333 + 1.2349} = 0.30$\
+
+
