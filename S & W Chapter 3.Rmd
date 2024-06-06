@@ -53,7 +53,7 @@ kable(table3.8[1:6, ], caption = "Table 3.8 (first six rows)")
 ```
 a. Run a three-way ANOVA to get the mean squares.\
 ```{r}
-summary(aov(score ~ person*occasion + person*item + item*occasion, data = table3.8))
+summary(aov(score ~ as.factor(person)*as.factor(occasion)*as.factor(item), data = table3.8))
 ```
 
 b. 
@@ -66,7 +66,13 @@ ${EMS}_{io} = {\sigma}_{pio,e}^2 + 6{\sigma}_{io}^2$\
 ${EMS}_{pio,e} = {\sigma}_{pio,e}^2$
 
 c. 
-THE RESIDUAL MEAN SQUARES VALUE IS NOT CORRECT IN THE AOV OUTPUT, AND I CAN'T FIGURE OUT WHY!
+$\hat{\sigma}_{pio,e}^2 = {MS}_{pio,e} = 0.558$\
+$\hat{\sigma}_{io}^2 = ({MS}_{io} - \hat{\sigma}_{pio,e}^2)/6 = (0.358 - 0.558)/6 = -0.0333$\
+$\hat{\sigma}_{po}^2 = ({MS}_{po} - \hat{\sigma}_{pio,e}^2)/5 = (0.667 - 0.558)/6 = 0.0218$\
+$\hat{\sigma}_{pi}^2 = ({MS}_{pi} - \hat{\sigma}_{pio,e}^2)/2 = (1.505 - 0.558)/2 = 0.4735$\
+$\hat{\sigma}_{o}^2 = ({MS}_{o} - \hat{\sigma}_{pio,e}^2 - 5\hat{\sigma}_{po}^2 - 6\hat{\sigma}_{io}^2)/30 = (1.067 - 0.558 - 5(0.0218) - 6(-0.0333))/30 = 0.020$\
+$\hat{\sigma}_{i}^2 = ({MS}_{i} - \hat{\sigma}_{pio,e}^2 - 2\hat{\sigma}_{pi}^2 - 6\hat{\sigma}_{io}^2)/12 = (3.525 - 0.558 - 2(0.4735) - 6(-0.0333))/12 = 0.1850$\
+$\hat{\sigma}_{p}^2 = ({MS}_{p} - \hat{\sigma}_{pio,e}^2 - 2\hat{\sigma}_{pi}^2 - 5\hat{\sigma}_{po}^2)/10 = (6.947 - 0.558 - 2(0.4735) - 5(0.0218))/10 = 0.5333$\
 
 ```{r}
 formula1 <- score ~ (1|person) + (1|item) + (1|occasion) + (1|person:item) + (1|person:occasion) + (1|item:occasion)
