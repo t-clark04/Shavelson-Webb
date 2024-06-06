@@ -75,7 +75,7 @@ $\hat{\sigma}_{i}^2 = ({MS}_{i} - \hat{\sigma}_{pio,e}^2 - 2\hat{\sigma}_{pi}^2 
 $\hat{\sigma}_{p}^2 = ({MS}_{p} - \hat{\sigma}_{pio,e}^2 - 2\hat{\sigma}_{pi}^2 - 5\hat{\sigma}_{po}^2)/10 = (6.947 - 0.558 - 2(0.4735) - 5(0.0218))/10 = 0.5333$\
 
 ```{r}
-formula1 <- score ~ (1|person) + (1|item) + (1|occasion) + (1|person:item) + (1|person:occasion) + (1|item:occasion)
+formula1 <- score ~ (1|person) + (1|item) + (1|occasion) + (1|person:item) + (1|person:occasion) + (1|item:occasion) 
 
 gstudy(data = table3.8, formula1)
 ```
